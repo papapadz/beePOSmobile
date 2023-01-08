@@ -2,7 +2,7 @@
   <ion-page>
   <div class="h-100">
       <ul class="cards">
-          <li class="cards__item" @click="addToCart('asd')">
+          <li v-for="l in list" v-bind:key="l" class="cards__item" @click="addToCart('asd')">
               <div class="card">
               <div class="card__image"></div>
               <div class="card__content">
@@ -22,6 +22,11 @@ import { IonPage } from '@ionic/vue';
 export default {
     components: {
       IonPage
+    },
+    data() {
+      return {
+        list: ['x','y','z','a','asd','asd']
+      }
     },
     methods: {
         addToCart(x) {
