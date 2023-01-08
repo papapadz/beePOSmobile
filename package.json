@@ -25,6 +25,7 @@
     "@ionic/vue": "^6.4.1",
     "@ionic/vue-router": "^6.4.1",
     "android": "0.0.8",
+    "axios": "^1.2.2",
     "core-js": "^3.6.5",
     "ionicons": "^6.0.3",
     "pinia": "^2.0.28",

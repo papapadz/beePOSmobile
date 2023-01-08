@@ -41,9 +41,12 @@ export default {
   },
   data() {
     return {
-      cart: ['1','1','2'],
-    };
+      cart: []
+    }
   },
+  mounted() {
+    console.log('adasd')
+  },  
   methods: {
     onCartClick() {
       // handle cart click event

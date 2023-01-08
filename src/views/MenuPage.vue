@@ -18,15 +18,27 @@
   
 <script>
 import { IonPage } from '@ionic/vue';
+import {ref} from 'vue'
+import axios from 'axios'
 
 export default {
     components: {
       IonPage
     },
-    data() {
+    setup() {
+      const list = ref([1,2,3,4,5,6,7,8])
+
       return {
-        list: ['x','y','z','a','asd','asd']
+        list
       }
+    },
+    mounted() {
+      axios.get('http://127.0.0.1/beePOS/public/api/beePOSmobile/login', { params: {
+        username: 'binarybee_admin',
+        password: 'password'
+      }}).then(function(response) {
+        console.log(response)
+      })  
     },
     methods: {
         addToCart(x) {
