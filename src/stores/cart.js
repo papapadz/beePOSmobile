@@ -1,16 +1,18 @@
 import { defineStore } from 'pinia'
 
-export const useCartStore = defineStore('cart', {
+export const cartStore = defineStore('cart', {
     state: () => ({ 
-        count: 0, 
-        name: 'Eduardo' 
+        cart: [] 
     }),
     getters: {
-      doubleCount: (state) => state.count * 2,
+      getCart: (state) => state.cart,
+      getCartTotalItems() {
+        return this.getCart.reduce((partialSum, a) => partialSum + a, 0)
+      }
     },
     actions: {
-      increment() {
-        this.count++
+      add(paramProduct) {
+        this.cart.push(paramProduct)
       },
     },
   })

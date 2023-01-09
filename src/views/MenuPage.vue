@@ -1,49 +1,56 @@
 <template>
   <ion-content>
-    <ion-page>
       <div class="h-100">
           <ul class="cards">
-              <li v-for="l in shop.getProducts" v-bind:key="l.id" class="cards__item" @click="addToCart('asd')">
+              <li v-for="product in shop.getProducts" v-bind:key="product.product_id" class="cards__item" @click="addToCart(product.product_id)">
                   <div class="card">
-                  <div class="card__image" background="{{ url(l.img_file) }}"></div>
+                  <div class="card__image" v-bind:style="{ 'background-image': 'url('+product.img_file+')' }"></div>
                   <div class="card__content">
-                      <div class="card__title">{{ l.product_name }}</div>
+                      <div class="card__title">{{ product.product_name }}</div>
                       <small>100</small>
                   </div>
                   </div>
               </li>
           </ul>
       </div>
-    </ion-page>
     <LoginPage v-if="!user.loggedIn"/>
   </ion-content>
 </template>
   
 <script>
-import { IonPage,IonContent } from '@ionic/vue';
+import { IonContent } from '@ionic/vue';
 import { userStore } from '../stores/user'
 import { shopStore } from '../stores/shop'
+import { cartStore } from '../stores/cart'
 import LoginPage from '../views/LoginPage.vue'
 
 export default {
     components: {
-      IonPage, IonContent, LoginPage
+      IonContent, LoginPage
     },
     setup() {
       const user = userStore()
       const shop = shopStore()
+      const cart = cartStore()
 
       return {
         shop,
-        user
+        user,
+        cart
       }
     },
     mounted() {
       
     },
     methods: {
-        addToCart(x) {
-            console.log(x)
+        addToCart(pid) {
+          let prevCartData = this.cart.getCart
+          prevCartData.push(pid)
+          
+          this.cart.$patch({
+            cart: prevCartData
+          })
+          console.log(this.cart.getCart)
         }
     }
 }
