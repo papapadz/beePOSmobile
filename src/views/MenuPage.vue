@@ -1,44 +1,45 @@
 <template>
-  <ion-page>
-  <div class="h-100">
-      <ul class="cards">
-          <li v-for="l in list" v-bind:key="l" class="cards__item" @click="addToCart('asd')">
-              <div class="card">
-              <div class="card__image"></div>
-              <div class="card__content">
-                  <div class="card__title">asdasd</div>
-                  <small>100</small>
-              </div>
-              </div>
-          </li>
-      </ul>
-  </div>
-</ion-page>
+  <ion-content>
+    <ion-page>
+      <div class="h-100">
+          <ul class="cards">
+              <li v-for="l in shop.getProducts" v-bind:key="l.id" class="cards__item" @click="addToCart('asd')">
+                  <div class="card">
+                  <div class="card__image" background="{{ url(l.img_file) }}"></div>
+                  <div class="card__content">
+                      <div class="card__title">{{ l.product_name }}</div>
+                      <small>100</small>
+                  </div>
+                  </div>
+              </li>
+          </ul>
+      </div>
+    </ion-page>
+    <LoginPage v-if="!user.loggedIn"/>
+  </ion-content>
 </template>
   
 <script>
-import { IonPage } from '@ionic/vue';
-import {ref} from 'vue'
-import axios from 'axios'
+import { IonPage,IonContent } from '@ionic/vue';
+import { userStore } from '../stores/user'
+import { shopStore } from '../stores/shop'
+import LoginPage from '../views/LoginPage.vue'
 
 export default {
     components: {
-      IonPage
+      IonPage, IonContent, LoginPage
     },
     setup() {
-      const list = ref([1,2,3,4,5,6,7,8])
+      const user = userStore()
+      const shop = shopStore()
 
       return {
-        list
+        shop,
+        user
       }
     },
     mounted() {
-      axios.get('http://127.0.0.1/beePOS/public/api/beePOSmobile/login', { params: {
-        username: 'binarybee_admin',
-        password: 'password'
-      }}).then(function(response) {
-        console.log(response)
-      })  
+      
     },
     methods: {
         addToCart(x) {
