@@ -13,29 +13,24 @@
               </li>
           </ul>
       </div>
-    <LoginPage v-if="!user.loggedIn"/>
   </ion-content>
 </template>
   
 <script>
 import { IonContent } from '@ionic/vue';
-import { userStore } from '../stores/user'
 import { shopStore } from '../stores/shop'
 import { cartStore } from '../stores/cart'
-import LoginPage from '../views/LoginPage.vue'
 
 export default {
     components: {
-      IonContent, LoginPage
+      IonContent
     },
     setup() {
-      const user = userStore()
       const shop = shopStore()
       const cart = cartStore()
 
       return {
         shop,
-        user,
         cart
       }
     },
@@ -44,13 +39,7 @@ export default {
     },
     methods: {
         addToCart(pid) {
-          let prevCartData = this.cart.getCart
-          prevCartData.push(pid)
-          
-          this.cart.$patch({
-            cart: prevCartData
-          })
-          console.log(this.cart.getCart)
+          this.cart.add(pid)
         }
     }
 }
