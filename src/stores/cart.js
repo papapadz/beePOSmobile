@@ -8,8 +8,17 @@ export const cartStore = defineStore('cart', {
     getters: {
       getCart: (state) => state.cart,
       getCartTotal() {
-        
-        return this.getCart.reduce((partialSum, a) => partialSum + a, 0)
+        const sum = this.getCart.reduce((e, object) => {
+          return e + parseFloat(object.total_amt);
+        }, 0);
+
+        const qty = this.getCart.reduce((e, object) => {
+          return e + object.qty;
+        }, 0);
+        return {
+          totalSum: parseFloat(sum).toFixed(2),
+          totalQty: qty
+        }
       }
     },
     actions: {
@@ -25,7 +34,7 @@ export const cartStore = defineStore('cart', {
             product_name: product.product_name,
             qty: qty,
             amt: product.amt,
-            total_amt: qty * product.amt
+            total_amt: (qty * product.amt).toFixed(2)
           }
         } else {
           const productItem = shop.getProducts.find(e => e.product_id == product_id)
@@ -49,7 +58,7 @@ export const cartStore = defineStore('cart', {
                     'product_name': product.product_name,
                     'qty': qty,
                     'amt': product.amt,
-                    'total_amt': qty * product.amt
+                    'total_amt': (qty * product.amt).toFixed(2)
                 }
             } else 
               this.cart.splice(itemIndex,1)

@@ -1,5 +1,18 @@
 <template>
-  <ion-content>
+<ion-content>
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="secondary">
+        <ion-button>
+          <ion-icon slot="icon-only" :icon="personCircle"></ion-icon>
+        </ion-button>
+        <ion-button>
+          <ion-icon slot="icon-only" :icon="search"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="ion-padding">
       <div class="h-100">
           <ul class="cards">
               <li v-for="product in shop.getProducts" v-bind:key="product.product_id" class="cards__item" @click="addToCart(product.product_id)">
@@ -14,16 +27,18 @@
           </ul>
       </div>
   </ion-content>
+</ion-content>
 </template>
   
 <script>
-import { IonContent } from '@ionic/vue';
+import { IonContent, IonHeader, IonToolbar, IonButtons, IonButton, IonIcon } from '@ionic/vue';
 import { shopStore } from '../stores/shop'
 import { cartStore } from '../stores/cart'
+import { search, personCircle } from 'ionicons/icons';
 
 export default {
     components: {
-      IonContent
+      IonContent, IonHeader, IonToolbar, IonButtons, IonButton, IonIcon
     },
     setup() {
       const shop = shopStore()
@@ -31,7 +46,9 @@ export default {
 
       return {
         shop,
-        cart
+        cart,
+        search,
+        personCircle
       }
     },
     mounted() {

@@ -5,7 +5,16 @@
     <ion-menu content-id="main">
       <ion-header>
         <ion-toolbar color="tertiary">
-          <ion-title>Menu</ion-title>
+          <ion-title>
+            <ion-label>
+              <ion-grid>
+                <ion-row>
+                  <ion-col>{{ cart.getCartTotal.totalQty }}<ion-icon :icon="cartOutline"></ion-icon></ion-col>
+                  <ion-col>Php {{ cart.getCartTotal.totalSum }}</ion-col>
+                </ion-row>
+              </ion-grid>  
+            </ion-label>
+          </ion-title>
         </ion-toolbar>
       </ion-header>
       <ion-content class="ion-padding">
@@ -14,33 +23,31 @@
     </ion-menu>
       
     <div class="ion-page" id="main">
-      <ion-header>
-        <ion-toolbar>
-          <ion-title>Main View</ion-title>
-        </ion-toolbar>
-      </ion-header>
-      <ion-content class="ion-padding">
-        <MenuPageVue />
-      </ion-content>
+      <MenuPageVue />
     </div>
   </ion-split-pane>
 </ion-content>
 </template>
   
   <script type="javascript">
-    import { IonContent, IonHeader, IonMenu, IonSplitPane, IonTitle, IonToolbar } from '@ionic/vue';
+    import { IonContent, IonHeader, IonMenu, IonSplitPane, IonTitle, IonToolbar, IonLabel, IonIcon, IonGrid, IonRow, IonCol } from '@ionic/vue';
     import MenuPageVue from './MenuPage.vue';
     import CartPage from './CartPage.vue';
     import LoginPage from './LoginPage.vue';
     import { userStore } from '../stores/user'
+    import { cartStore } from '../stores/cart'
+    import { cartOutline } from 'ionicons/icons'
 
     export default {
-      components: { IonContent, IonHeader, IonMenu, IonSplitPane, IonTitle, IonToolbar, MenuPageVue, CartPage, LoginPage },
+      components: { IonContent, IonHeader, IonMenu, IonSplitPane, IonTitle, IonToolbar, MenuPageVue, CartPage, LoginPage, IonLabel, IonIcon, IonGrid, IonRow, IonCol },
       setup() {
         const user = userStore()
-        
+        const cart = cartStore()
+
         return {
-          user
+          user,
+          cart,
+          cartOutline
         }
       }
     }
