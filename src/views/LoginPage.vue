@@ -77,7 +77,7 @@ export default {
                             loggedIn: true,
                             user: responseData.person
                         })
-                        console.log*
+                        self.user.setIP()
                         /** set shop */
                         self.shop.$patch({
                             shop: responseData.affiliation.shop
