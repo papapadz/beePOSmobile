@@ -46,10 +46,13 @@
                 <ion-label class="ion-padding-start"><h2>Total Qty {{ cart.getCartTotal.totalQty }}</h2></ion-label>
             </ion-item>
             <ion-item>
-                <ion-label class="ion-padding-start"><h2>Total Sum Php {{ cart.getCartTotal.totalSum }}</h2></ion-label>
+                <ion-label class="ion-padding-start"><h2>Subtotal Php {{ parseFloat(cart.getCartTotal.totalSum) + parseFloat(cart.getCartTotal.totalDiscount) }}</h2></ion-label>
             </ion-item>
-            <ion-item class="ion-float-right">
-                <ion-button expand="full">Check Out</ion-button>
+            <ion-item>
+                <ion-label class="ion-padding-start"><h2>Discount Php {{ cart.getCartTotal.totalDiscount }}</h2></ion-label>
+            </ion-item>
+            <ion-item>
+                <ion-label class="ion-padding-start"><h2>Net Amount Php {{ cart.getCartTotal.totalSum }}</h2></ion-label>
             </ion-item>
         </ion-list>
     </ion-modal>
@@ -112,6 +115,7 @@ export default {
         },
         saveSales() {
             console.log
+            this.cart.checkOut()
             //this.cart.$reset()
         },
         cancel() {

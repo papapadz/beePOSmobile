@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { defineStore } from 'pinia'
 import { shopStore } from './shop'
 import { userStore } from './user'
@@ -22,7 +23,8 @@ export const cartStore = defineStore('cart', {
         }, 0);
         return {
           totalSum: (parseFloat(sum) - parseFloat(discount)).toFixed(2),
-          totalQty: qty
+          totalQty: qty,
+          totalDiscount: discount
         }
       }
     },
@@ -86,7 +88,15 @@ export const cartStore = defineStore('cart', {
       },
       checkOut() {
         const user = userStore()
-        console.log(user.getPublicIP)
+        
+        axios.get('http://127.0.0.1/beePOS/public/api/beePOSmobile/sales/save', { params: {
+            user_id: user.getUser.id,
+            sales: this.cart,
+            ip: user.getPublicIP
+          }
+        }).then(function(response) {
+          console.log(response)
+        })
       }
     }
   })
